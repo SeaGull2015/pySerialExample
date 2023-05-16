@@ -3,17 +3,18 @@ import serial #pySerial v 3.5
 from serial.tools import list_ports
 
 def serial_listen(filename = "data.txt", port = "USB0"):
-    s = serial.Serial(port)
+    s = serial.Serial(port, baudrate=9600)
 
-    with open(filename, "w") as f:
-        while(True):
-            resultstring = ""
-            char = 'Ю'  # if we see this character - something is wrong with the loop
-            while (char != '\n'):
-                char = s.read().decode('ASCII')
-                resultstring += char
-            print(resultstring)
+    while(True):
+        resultstring = ""
+        char = 'Ю'  # if we see this character - something is wrong with the loop
+        while (char != '\n'):
+            char = s.read().decode('ASCII')
+            resultstring += char
+        print(resultstring)
+        with open(filename, "w") as f:
             f.write(resultstring)
+
 
 
 if __name__ == '__main__':
